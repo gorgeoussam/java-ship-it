@@ -1,5 +1,8 @@
 package ru.yandex.practicum.delivery;
 
+import static ru.yandex.practicum.delivery.AppConstants.FRAGILE_COST;
+import static ru.yandex.practicum.delivery.ParcelType.FRAGILE;
+
 public class FragileParcel extends Parcel implements Trackable{
 
 
@@ -9,12 +12,18 @@ public class FragileParcel extends Parcel implements Trackable{
 
     @Override
     double getBaseCost() {
-        return 4;
+        return FRAGILE_COST;
     }
 
     @Override
-    protected String getParcelType() {
-        return Parcel.ParcelType.FRAGILE.getText();
+    protected ParcelType getParcelType() {
+        return FRAGILE;
+    }
+
+    @Override
+    public void packageItem() {
+        System.out.println("Посылка <<" + description + ">> обёрнута в защитную плёнку");
+        super.packageItem();
     }
 
     @Override

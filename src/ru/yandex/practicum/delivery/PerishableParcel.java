@@ -1,9 +1,12 @@
 package ru.yandex.practicum.delivery;
 
+import static ru.yandex.practicum.delivery.AppConstants.PERISHABLE_COST;
+import static ru.yandex.practicum.delivery.ParcelType.PERISHABLE;
+
 public class PerishableParcel extends Parcel {
 
     private final int timeToLive;
-    private boolean isExpired = false;
+
 
     public PerishableParcel(String description, double weight, String deliveryAddress, int sendDay, int timeToLive) {
         super(description, weight, deliveryAddress, sendDay);
@@ -12,25 +15,18 @@ public class PerishableParcel extends Parcel {
 
     @Override
     double getBaseCost() {
-        return 3;
+        return PERISHABLE_COST;
     }
 
     @Override
-    protected String getParcelType() {
-        return Parcel.ParcelType.PERISHABLE.getText();
+    protected ParcelType getParcelType() {
+        return PERISHABLE;
     }
 
-    @Override
-    public void packageItem() {
-        System.out.println("Посылка <<" + description + ">> обёрнута в защитную плёнку");
-        super.packageItem();
-    }
 
     public Boolean isExpired(int currentDay) {
-        if (sendDay + timeToLive >= currentDay) {
-            isExpired = true;
-        }
-        return isExpired;
+       return (sendDay + timeToLive > currentDay);
+
     }
 }
 
